@@ -5,13 +5,7 @@ terraform {
       version = "=2.46.0"
     }
   }
-    #Terraform state storage to Azure storage
-    backend "azurerm" {
-      resource_group_name ="elvis-sandbox01"
-      storage_account_name = "elvistfstorage"
-      container_name = "tfstatefile"
-      key = "terraform-linux01-vm.tfstate"
-      }
+
 }
 
 #Confing the microsoft Provider
@@ -61,12 +55,16 @@ resource "azurerm_network_interface" "nic" {
     #help
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
+    #new
+    public_ip_address_id = azurerm_public_ip.public_ip.id
   
   }
   tags = {
   enviroment = "elvis-dev"
 }
 }
+
+#Connect the security group to the network interface
 
 #Create Network Security Group and rules
 #Maybe optional
@@ -119,18 +117,13 @@ security_rule {
 
 }
 
-
-
-
-
-
 #Create public IPs
 resource "azurerm_public_ip" "public_ip"{
 name = var.public_ip_name
 location = azurerm_resource_group.elvis-sandbox02.location
 resource_group_name = azurerm_resource_group.elvis-sandbox02.name
 #what is this?
-allocation_method = "Dynamic"
+allocation_method = "Static"
 
 tags = {
   enviroment = "elvis-dev"
