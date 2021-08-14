@@ -53,3 +53,15 @@ variable "linux_virtual_machine" {
     description = "This provide the name for Linux VM"
     type = string
 }
+
+#Azure account username
+variable "username" {
+    description = "Provide the Username for VM"
+    type = string
+}
+
+#Azure account password
+variable "password" {
+    description = "Provide the password for VM"
+    type = string
+}

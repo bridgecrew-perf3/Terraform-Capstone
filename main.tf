@@ -5,13 +5,7 @@ terraform {
       version = "=2.46.0"
     }
   }
-    #Terraform state storage to Azure storage
-    backend "azurerm" {
-      resource_group_name ="elvis-sandbox01"
-      storage_account_name = "elvistfstorage"
-      container_name = "tfstatefile"
-      key = "terraform-linux01-vm.tfstate"
-      }
+
 }
 
 #Confing the microsoft Provider
@@ -147,8 +141,8 @@ resource "azurerm_linux_virtual_machine" "linuxvm" {
   resource_group_name = azurerm_resource_group.elvis-sandbox02.name
   size                = "Standard_F2"
   computer_name = "hostname"
-  admin_username      = "azureuser"
-  admin_password      = "AzureUser123!"
+  admin_username      = var.username
+  admin_password      = var.password
   disable_password_authentication = false
 
 
